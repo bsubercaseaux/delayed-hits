@@ -1,8 +1,9 @@
 import online_api
 
 class LRU(online_api.OnlineCaching):
-    def __init__(self, k):
-        super().__init__(k)
+    def __init__(self, k, Z=1):
+        super().__init__(k, Z)
+        self.name = f"LRU (Z={Z})"
         
     def evict_non_optional(self, requested_page):
         last_use = {}
