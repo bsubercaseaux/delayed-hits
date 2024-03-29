@@ -24,7 +24,3 @@ class IBMGenerator:
     
     def generate(self):
         return self.requests
-
-
-IBM = IBMGenerator()
-print(len(IBM.generate()))
