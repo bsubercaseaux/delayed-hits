@@ -2,7 +2,7 @@
 
 class IBMGenerator:
     def __init__(self):
-        datafile = 'IBMObjectStoreSample'
+        datafile = 'benchmarks/IBMObjectStoreSample'
         requests = []        
         page_id_map = {}
         next_page_num = 0
@@ -19,7 +19,7 @@ class IBMGenerator:
                         page_id_map[page_id] = next_page_num
                         next_page_num += 1
 
-        self.requests = [page_id_map[page_id] for page_id in requests]
+        self.requests = [page_id_map[page_id]+1 for page_id in requests]
         print("Parsed request sequence of length ", len(self.requests), " with ", len(page_id_map), " unique pages")
     
     def generate(self):

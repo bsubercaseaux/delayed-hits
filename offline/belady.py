@@ -3,6 +3,11 @@ import offline_api
 class Belady(offline_api.OfflineCaching):
     def __init__(self, k, request_sequence):
         super().__init__(k, request_sequence)
+        self.page_occs = {} 
+        
+    def on_request(self, index):
+        return super().on_request(index)
+    
         
     def evict_non_optional(self, index):
         requested_page = self.request_sequence[index]

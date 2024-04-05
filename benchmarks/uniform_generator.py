@@ -6,6 +6,6 @@ class UniformGenerator:
         random.seed(self.seed)
         
     def generate(self, n_requests):
-        return [random.randint(0, self.n - 1) for _ in range(n_requests)]
+        return [random.randint(1, self.n) for _ in range(n_requests)]
         
         

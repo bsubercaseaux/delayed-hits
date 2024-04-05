@@ -1,15 +1,11 @@
 class OnlineCaching:
     # k is the cache size
     def __init__(self, k, Z=1, optional_policy=False):
-        self.cache = set()
+        self.cache = set(range(1, k+1))
         self.k = k
         self.penalty = 0
         self.Z = Z
         self.Q = [None]*Z
-        self.in_transit = {}
-        self.pending_requests = {}
-        self.arrival_times = {}
-        self.page_by_arrival_time = {}
         self.tick = 0
         self.misses = 0
         self.name = "Abstract Online Caching Algorithm"
@@ -42,7 +38,7 @@ class OnlineCaching:
         self.previous_requests.append(page)
         p = self.Q.pop(0)
         if p is not None:
-            if len(self.cache) > self.k:
+            if len(self.cache) >= self.k:
                 self.evict_non_optional(page)
             self.cache_page(p)
         if page not in self.cache and page not in self.Q:
@@ -51,14 +47,14 @@ class OnlineCaching:
             self.Q.append(None)
         if page in self.Q:
             self.misses += 1
-            self.penalty += self.Q.index(page)
+            self.penalty += (self.Q.index(page) + 1)
         
     def run(self, request_sequence, debug=False):
         for i, page in enumerate(request_sequence):
             if debug:
-                print(f"i={i}, request for {request_sequence[i]}, tick = {self.tick}, arrival_times = {self.arrival_times}, page_by_arrival_time = {self.page_by_arrival_time}")
+                print(f"i={i}, request for {request_sequence[i]}, tick = {self.tick}, Queue =  {self.Q}")
             self.on_request(page)
             if debug:
-                print(f"i={i}, cache = {self.cache}, pending = {self.pending_requests} penalty = {self.penalty}")
+                print(f"i={i}, cache = {self.cache}, Queue = {self.Q} penalty = {self.penalty}")
             self.tick += 1
         return self.penalty, self.misses
